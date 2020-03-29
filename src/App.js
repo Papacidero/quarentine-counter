@@ -56,12 +56,16 @@ function App() {
 
 
       <br />
-      <br />
 
       <audio controls autoPlay>
         <source src="music.mp3" type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
+
+      <br />
+
+
+      <div class="fb-share-button" data-href="https://quarentine-counter.firebaseapp.com/" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fquarentine-counter.firebaseapp.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
 
       </header>
     </div>
