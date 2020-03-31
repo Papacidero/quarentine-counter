@@ -42,7 +42,7 @@ function App() {
       }
       { fromDate.changed && toDate.changed && !toDate.date &&
         <>
-          <h1>You are <span>{moment().diff(moment(fromDate.date),'days')}</span> days at your home</h1>
+          <h1>Awesome, you are <span>{moment().diff(moment(fromDate.date),'days')}</span> days helping the world.</h1>
           <p>{quotes[randomNumber({min: 0, max: quotes.length -1})]}</p>
         </>
       }
