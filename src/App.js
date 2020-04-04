@@ -7,9 +7,21 @@ import "react-datepicker/dist/react-datepicker.css";
 
 function App() {
 
-  const [fromDate, setFromDate] = useState({date: null, changed: false})
+  const lsFromDate = localStorage.getItem('fromDate');
+  const [fromDate, setFromDate] = useState({date: lsFromDate ? lsFromDate : null, changed: lsFromDate ? true : false})
   const [toDate, setToDate] = useState({date: null, changed: true})
   const [data, setdata] = useState({userCountry: '', userCountryTotalRecovered: '', worldTotalRecovered: ''});
+
+  const handleFromDate = (data) => {
+    const {date, changed} = data;
+    localStorage.setItem('fromDate', date);
+    setFromDate({date, changed})
+  }
+
+  const reset = () => {
+    localStorage.removeItem('fromDate');
+    setFromDate({date: null, changed: false});
+  }
 
   useEffect(()=>{
     async function loadContent() {
@@ -35,7 +47,6 @@ function App() {
         worldTotalRecovered: data.Countries.reduce((prev, curr) => prev + curr.TotalRecovered, 0)
       });
 
-      
     }
     loadContent();
   }, [])
@@ -55,7 +66,7 @@ function App() {
           <h1>Since when you are at home?</h1>
           <DatePicker
               selected={new Date()}
-              onChange={date => {setFromDate({date, changed: true});}}
+              onChange={date => {handleFromDate({date, changed: true});}}
               maxDate={new Date()}
               inline
             /> 
@@ -74,7 +85,8 @@ function App() {
       }
       { fromDate.changed && toDate.changed && !toDate.date &&
         <>
-          <h1>Awesome, you are <span>{moment().diff(moment(fromDate.date),'days')}</span> days helping the world.</h1>
+          <h1>Awesome, you are <span>{moment().diff(moment(new Date(fromDate.date)),'days')}</span> days helping the world.</h1>
+          <small onClick={()=> reset()} className="info">Reset Counter</small>
           <p>{quotes[randomNumber({min: 0, max: quotes.length -1})]}</p>
         </>
       }
@@ -101,16 +113,22 @@ function App() {
 
       </content>
     
-      <aside>
-        <h1>A total of <span>{data.worldTotalRecovered}</span> people are already fully revovered</h1>
-        <h2>And in <span>{data.userCountry}</span> a total of <span>{data.userCountryTotalRecovered}</span></h2>
+      { data.userCountry && data.worldTotalRecovered &&
+        <aside>
+        { data.worldTotalRecovered &&
+          <h1>A total of <span>{data.worldTotalRecovered}</span> people are already fully revovered worldwide!</h1>
+        }
+        { data.userCountry &&
+          <h2>And a total of <span>{data.userCountryTotalRecovered}</span> in <span>{data.userCountry}</span>.</h2>
+        }
         <br />
-        <small class="info">
+        <small className="info">
           Data from<a href="https://documenter.getpostman.com/view/10808728/SzS8rjbc?version=latest#b07f97ba-24f4-4ebe-ad71-97fa35f3b683" target="_blank">
             Coronavirus COVID19 API
           </a>
         </small>
       </aside>  
+      }
       </div>
       
     </div>
