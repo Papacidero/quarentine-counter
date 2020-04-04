@@ -31,13 +31,14 @@ function App() {
         
       setdata({
         userCountry,
-        userCountryTotalRecovered: data.Countries.filter(item => item.Country.match(new RegExp(`${userCountry}`,'gi')))[0].TotalRecovered,
+        userCountryTotalRecovered: data.Countries.filter(item => item.Country.match(new RegExp(`${userCountry}$`,'gi')))[0].TotalRecovered,
         worldTotalRecovered: data.Countries.reduce((prev, curr) => prev + curr.TotalRecovered, 0)
       });
+
+      
     }
     loadContent();
-    console.log(data)
-  }, [fromDate])
+  }, [])
 
   const randomNumber =  ({min = 1, max = 100} = {})=> {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -99,14 +100,17 @@ function App() {
       <div className="fb-share-button" data-href="https://quarentine-counter.firebaseapp.com/" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fquarentine-counter.firebaseapp.com%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">Share</a></div>
 
       </content>
-      { fromDate.changed && toDate.changed && !toDate.date &&
-        <>
-        <aside>
-          <h1>A total of <span>{data.worldTotalRecovered}</span> people are already fully revovered</h1>
-          <h2>And in <span>{data.userCountry}</span> a total of <span>{data.userCountryTotalRecovered}</span></h2>
-        </aside>  
-        </>
-      }
+    
+      <aside>
+        <h1>A total of <span>{data.worldTotalRecovered}</span> people are already fully revovered</h1>
+        <h2>And in <span>{data.userCountry}</span> a total of <span>{data.userCountryTotalRecovered}</span></h2>
+        <br />
+        <small class="info">
+          Data from<a href="https://documenter.getpostman.com/view/10808728/SzS8rjbc?version=latest#b07f97ba-24f4-4ebe-ad71-97fa35f3b683" target="_blank">
+            Coronavirus COVID19 API
+          </a>
+        </small>
+      </aside>  
       </div>
       
     </div>
