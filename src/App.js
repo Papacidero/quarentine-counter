@@ -11,6 +11,7 @@ function App() {
   const [fromDate, setFromDate] = useState({date: lsFromDate ? lsFromDate : null, changed: lsFromDate ? true : false})
   const [toDate, setToDate] = useState({date: null, changed: true})
   const [data, setdata] = useState({userCountry: '', userCountryTotalRecovered: '', worldTotalRecovered: ''});
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleFromDate = (data) => {
     const {date, changed} = data;
@@ -44,6 +45,7 @@ function App() {
           return null;
         });
 
+      setIsLoading(false);
         
       setdata({
         userCountry,
@@ -63,7 +65,7 @@ function App() {
     <div className="Quarentine">
       <div className="background_image"></div>
 
-      <div className="container">
+      <div className="container-fluid">
       <content className="content">
       { !fromDate.date && !fromDate.changed &&
         <>
@@ -92,8 +94,8 @@ function App() {
           <h1>Awesome, you are <span>{moment().diff(moment(new Date(fromDate.date)),'days')}</span> days helping the world.
           <br />
           </h1>
-          <button onClick={()=> reset()} type="button" class="btn btn-secondary btn-sm">Change Date</button>
           <p>{quotes[randomNumber({min: 0, max: quotes.length -1})]}</p>
+          <button onClick={()=> reset()} type="button" className="btn btn-link btn-sm">Reset Date</button>
         </>
       }
       { fromDate.changed && toDate.changed && toDate.date &&
@@ -104,22 +106,9 @@ function App() {
         </>
       }
 
-
-      <br />
-
-      <audio controls>
-        <source src="music.mp3" type="audio/mpeg" />
-        Your browser does not support the audio element.
-      </audio>
-
-      <br />
-
-
-      <div className="fb-share-button" data-href="https://quarentine-counter.firebaseapp.com/" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fquarentine-counter.firebaseapp.com%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">Share</a></div>
-
       </content>
     
-      { data.userCountry && data.worldTotalRecovered &&
+      { data.userCountry && data.worldTotalRecovered && !isLoading &&
         <aside>
         { data.worldTotalRecovered &&
           <h1>A total of <span>{data.worldTotalRecovered}</span> people are already fully revovered worldwide!</h1>
@@ -133,8 +122,21 @@ function App() {
             Coronavirus COVID19 API
           </a>
         </small>
+        <br />
+        <div className="fb-share-button" data-href="https://quarentine-counter.firebaseapp.com/" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fquarentine-counter.firebaseapp.com%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">Share</a></div>
+
       </aside>  
       }
+
+      {
+        isLoading &&
+        <aside>
+          <p>Loading</p>
+        </aside>
+      }
+      <footer className="info">
+        Created by <a href="">Carlos Eduardo Papacidero</a>
+      </footer>
       </div>
       
     </div>
