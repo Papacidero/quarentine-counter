@@ -69,7 +69,7 @@ function App() {
       <content className="content">
       { !fromDate.date && !fromDate.changed &&
         <>
-          <h1>Since when you are at home?</h1>
+          <h2>Since when you are at home?</h2>
           <DatePicker
               selected={new Date()}
               onChange={date => {handleFromDate({date, changed: true});}}
@@ -111,14 +111,13 @@ function App() {
       { data.userCountry && data.worldTotalRecovered && !isLoading &&
         <aside>
         { data.worldTotalRecovered &&
-          <h1>A total of <span>{data.worldTotalRecovered}</span> people are already fully revovered worldwide!</h1>
+          <h2>A total of <span>{data.worldTotalRecovered}</span> people recovered worldwide!</h2>
         }
         { data.userCountry &&
-          <h2>And a total of <span>{data.userCountryTotalRecovered}</span> in <span>{data.userCountry}</span>.</h2>
+          <h3>And a total of <span>{data.userCountryTotalRecovered}</span> in <span>{data.userCountry}</span>.</h3>
         }
-        <br />
         <small className="info">
-          Data from<a href="https://documenter.getpostman.com/view/10808728/SzS8rjbc?version=latest#b07f97ba-24f4-4ebe-ad71-97fa35f3b683" target="_blank">
+          Source:<a href="https://documenter.getpostman.com/view/10808728/SzS8rjbc?version=latest#b07f97ba-24f4-4ebe-ad71-97fa35f3b683" target="_blank">
             Coronavirus COVID19 API
           </a>
         </small>
