@@ -34,11 +34,15 @@ function App() {
         .then(response => response.country)
         .catch((data, status) => {
             console.log('Request failed');
+            return null;
         })
       const data = await fetch("https://api.covid19api.com/summary", requestOptions)
         .then(response => response.text())
         .then(result => JSON.parse(result))
-        .catch(error => console.log('error', error));
+        .catch(error => {
+          console.log('error', error);
+          return null;
+        });
 
         
       setdata({
@@ -85,8 +89,10 @@ function App() {
       }
       { fromDate.changed && toDate.changed && !toDate.date &&
         <>
-          <h1>Awesome, you are <span>{moment().diff(moment(new Date(fromDate.date)),'days')}</span> days helping the world.</h1>
-          <small onClick={()=> reset()} className="info">Reset Counter</small>
+          <h1>Awesome, you are <span>{moment().diff(moment(new Date(fromDate.date)),'days')}</span> days helping the world.
+          <br />
+          </h1>
+          <button onClick={()=> reset()} type="button" class="btn btn-secondary btn-sm">Change Date</button>
           <p>{quotes[randomNumber({min: 0, max: quotes.length -1})]}</p>
         </>
       }
