@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import quotes from './quotes';
+import { Helmet } from 'react-helmet';
 import './App.scss';
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -63,6 +64,14 @@ function App() {
 
   return (
     <div className="Quarentine">
+      <Helmet>
+      <meta property="og:url" content="https://quarentine-counter.firebaseapp.com/" />
+      <meta property="og:title" content="Quarentine Counter" />
+      <meta property="og:description" content="Quarentine Counter! Stay Home! Stay Safe! Stay Fool!" />
+      <meta property="fb:app_id" content="2867711813309865" />
+      <meta property="og:image" content="https://picsum.photos/200/300" />
+      <meta property="og:type" content="website" />
+      </Helmet>
       <div className="background_image"></div>
 
       <div className="container-fluid">
